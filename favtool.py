@@ -14,8 +14,8 @@ class App(object):
         self.style.theme_use('clam')
         self.root.title('bookmark generator')
 
-        self.mydatabase = "mydatabase"
-        self.mybookmark = "mybook.html"
+        self.mydatabase = "/home/klaus/Documents/mydatabase"
+        self.mybookmark = "/home/klaus/Documents/mybook.html"
 
         self.frm = ttk.Frame(self.root)
         self.frm.grid(column=0, row=0, sticky='nsew')
@@ -26,11 +26,11 @@ class App(object):
 
         # check if DB file exists, if so get numbers of bookmarks stored in it
         try:
-            myfile = open(self.mybookmark)
+            myfile = open(self.mydatabase)
         except:
             self.site_nubr = 0
         else:
-            self.site_nubr = self.line_count(self.mybookmark)
+            self.site_nubr = self.line_count(self.mydatabase)
 
         self.label_name = ttk.Label(self.frm, text='Site name:')
         self.label_name.grid(column=0, row = 2, sticky=W)
@@ -108,7 +108,7 @@ class App(object):
         mystring="<div><a href="+site_link+"><img src='data:image/png;base64,"+result+"' width=16 height=16 >&nbsp;"+site_name+"</a></div>&nbsp;"
 
         # store bookmark in DB file
-        myfile = open(self.mybookmark, "a")
+        myfile = open(self.mydatabase, "a")
         print(mystring,file=myfile)
         myfile.close()
 
@@ -139,17 +139,16 @@ class App(object):
             .container div {
             height: 15px;
             width: 120px;
-            <!--background: red;-->
             }
             a:link {text-decoration: none;}
             </style></head><body><div class=container>"""
         html_footer='</div></body></html>'
-        mydata = open(self.mybookmark, "r")
-        myfile = open('index.html','w')
+        mydata = open(self.mydatabase, "r")
+        myfile = open(self.mybookmark,'w')
         print(html_header,file=myfile)
-        for idx, line in enumerate(mydata):
-            print(idx)
-            #if (idx % 5 == 0) and idx!=0:
+        for line in mydata:
+            # print(idx)
+            # if (idx % 5 == 0) and idx!=0:
             #    print("new column")
             print(line,file=myfile)
         print(html_footer,file=myfile)
