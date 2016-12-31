@@ -147,10 +147,8 @@ class App(object):
         myfile = open(self.mybookmark,'w')
         print(html_header,file=myfile)
         for line in mydata:
-            # print(idx)
-            # if (idx % 5 == 0) and idx!=0:
-            #    print("new column")
             print(line,file=myfile)
+            
         print(html_footer,file=myfile)
         mydata.close()
         myfile.close()
