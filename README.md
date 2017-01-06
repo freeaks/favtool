@@ -6,5 +6,5 @@ an html file is generated from the DB file.
 the result is 1 single file containing all links with their favicons.
 i know, it just blew your mind, the world will never be the same.
 
-![Alt text](https://github.com/freeaks/nsklaus/blob/master/screenshot.png?raw=true?raw=true "Optional Title")
+![Alt text](https://github.com/nsklaus/blob/master/screenshot.png?raw=true?raw=true "Optional Title")
 
