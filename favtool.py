@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import tkinter
 import base64
 import os
@@ -133,7 +134,7 @@ class App(object):
             flex-direction: column;
             align-content: flex-start;
             flex-wrap: wrap;
-            height:100vh;
+            height:92vh;
             vertical-align:top;
             }
             .container div {
