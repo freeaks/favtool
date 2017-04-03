@@ -9,8 +9,7 @@ import requests
 from tkinter import ttk
 from tkinter import *
 from PIL import Image
-#from bs4 import BeautifulSoup 
-#from pyfav import download_favicon
+
 
 class App(object):
 
@@ -94,11 +93,12 @@ class App(object):
             r = requests.get(icon_link)
             with open('/tmp/favicon.ico', 'wb') as outfile:
                 outfile.write(r.content)
+                outfile.close()
 
         except:
             print("couldn't get icon", sys.exc_info()[0])
             raise
-            
+
 
     def store_link(self):
         # grab data from tkinter entry fields
