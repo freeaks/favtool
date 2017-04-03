@@ -84,12 +84,6 @@ class App(object):
             page = urllib.request.urlopen(req).read()
             soup = bs.BeautifulSoup(page,'lxml')
             icon_link = soup.find("link").get("href")
-            print(icon_link)
-
-            # urllib gives "urllib.error.HTTPError: HTTP Error 403: Forbidden"
-            # using 'requests' instead of urllib
-            # urllib.request.urlretrieve(icon_link, os.path.join("/tmp/favicon.ico"))
-
             r = requests.get(icon_link)
             with open('/tmp/favicon.ico', 'wb') as outfile:
                 outfile.write(r.content)
