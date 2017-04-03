@@ -2,10 +2,15 @@
 import tkinter
 import base64
 import os
+import urllib.request
+import bs4 as bs
+import sys
+import requests
 from tkinter import ttk
 from tkinter import *
 from PIL import Image
-from pyfav import download_favicon
+#from bs4 import BeautifulSoup 
+#from pyfav import download_favicon
 
 class App(object):
 
@@ -15,8 +20,8 @@ class App(object):
         self.style.theme_use('clam')
         self.root.title('bookmark generator')
 
-        self.mydatabase = "/home/klaus/Documents/mydatabase"
-        self.mybookmark = "/home/klaus/Documents/mybook.html"
+        self.mydatabase = os.path.expanduser('~')+'/Documents/mydatabase'
+        self.mybookmark = os.path.expanduser('~')+'/Documents/mybook.html'
 
         self.frm = ttk.Frame(self.root)
         self.frm.grid(column=0, row=0, sticky='nsew')
@@ -75,11 +80,25 @@ class App(object):
         # get site favicon and rename it to 'favicon.ico'
         try:
             print("trying to download icon")
-            favicon_saved_at = download_favicon(mylink, target_dir='/tmp')
-            print("icon download success",favicon_saved_at)
-            os.rename(favicon_saved_at, "/tmp/favicon.ico")
+            hdr = {'User-Agent': 'Mozilla/5.0'}
+            req = urllib.request.Request(mylink,headers=hdr)
+            page = urllib.request.urlopen(req).read()
+            soup = bs.BeautifulSoup(page,'lxml')
+            icon_link = soup.find("link").get("href")
+            print(icon_link)
+
+            # urllib gives "urllib.error.HTTPError: HTTP Error 403: Forbidden"
+            # using 'requests' instead of urllib
+            # urllib.request.urlretrieve(icon_link, os.path.join("/tmp/favicon.ico"))
+
+            r = requests.get(icon_link)
+            with open('/tmp/favicon.ico', 'wb') as outfile:
+                outfile.write(r.content)
+
         except:
-            print("couldn't get icon")
+            print("couldn't get icon", sys.exc_info()[0])
+            raise
+            
 
     def store_link(self):
         # grab data from tkinter entry fields
@@ -139,7 +158,7 @@ class App(object):
             }
             .container div {
             height: 15px;
-            width: 120px;
+            width: 160px;
             }
             a:link {text-decoration: none;}
             </style></head><body><div class=container>"""
